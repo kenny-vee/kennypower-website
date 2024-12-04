@@ -1,0 +1,177 @@
+ /* Header styles */
+.header {
+    height: 55px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    z-index: 1000; /* Ensures the header stays on top of all content */
+}
+
+/* Left section of the header */
+.left-section {
+    display: flex;
+    align-items: center;
+}
+
+.hamburger-menu {
+    height: 24px;
+    margin-left: 24px;
+    margin-right: 24px;
+}
+
+.youtube-logo {
+    height: 20px;
+}
+
+/* Middle section of the header (search bar area) */
+.middle-section {
+    flex: 1;
+    margin-left: 70px;
+    margin-right: 30px;
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+}
+
+/* Search bar styles */
+.search-bar {
+    flex: 1;
+    height: 36px;
+    padding-left: 10px;
+    font-size: 16px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(95, 90, 90);
+    border-radius: 3px;
+    box-shadow: inset 1px 2px 5px rgb(0, 0, 0, 0.10);
+}
+
+/* Placeholder text for the search bar */
+.search-bar::placeholder {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+}
+
+/* Search button styles */
+.search-button {
+    height: 40px;
+    width: 66px;
+    background-color: rgb(228, 226, 226);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(168, 163, 163);
+    margin-left: -1px;
+    margin-right: 40px;
+}
+.search-button, 
+.voice-search-button,
+.upload-icon-contanal,
+.youtube-apps-contanal,
+.notifications-icon-contanal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+   }
+.search-button .tap-butten, 
+.voice-search-button .tap-butten,
+.upload-icon-contanal .tap-butten,
+.youtube-apps-contanal .tap-butten,
+.notifications-icon-contanal .tap-butten {
+position: absolute;
+background-color: rgb(94, 94, 94);
+color: rgb(255, 255, 255);
+padding-top: 4px; 
+padding-bottom: 8px;
+padding-left: 8px;
+padding-right: 4px;
+border-radius: 2px;
+font-size: 15px;
+bottom: -35px;
+opacity: 0;
+transition: opacity 0,15s;
+pointer-events: none;
+white-space: nowrap;
+
+}
+.search-button:hover .tap-butten, 
+.voice-search-button:hover .tap-butten,
+.upload-icon-contanal:hover .tap-butten,
+.youtube-apps-contanal:hover .tap-butten,
+.notifications-icon-contanal:hover .tap-butten {
+    opacity: 1;
+}
+
+.search-icon {
+    height: 25px;
+}
+   
+  
+
+/* Voice search button */
+.voice-search-button {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    border: none;
+    background-color: rgb(207, 201, 201);
+}
+
+.voice-search-icon {
+    height: 24px;
+  
+}
+
+/* Right section (icons for upload, notifications, and profile) */
+.right-section {
+    width: 180px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+}
+
+.upload-icon {
+    height: 24px;
+}
+.youtube-apps-icon {
+    height: 24px;
+}
+.notifications-icon {
+    height: 24px;
+}
+.notifications-icon-contanal {
+    position: relative;
+
+}
+.notifications-icon-cont {
+    position: absolute;
+    top: -2px;
+    right: -5px;
+    background-color: rgb(255, 0, 0);
+    color: white;
+    font-family: arial;
+    font-size: 11px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border-radius: 10px;
+
+}
+.current-pic {
+    height: 32px;
+    border-radius: 16px;
+    object-fit: cover; /* Ensures profile picture is properly cropped */
+}
+
+/* Adjust the body to account for the fixed header */
+body {
+    padding-top: 55px; /* Prevents the content from being hidden behind the fixed header */
+}

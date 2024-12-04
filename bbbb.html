@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eunice Children Wears</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+
+        /* Basic Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Georgia, 'Times New Roman', Times, serif
+}
+
+body {
+    background-color: #000000;
+    color: #333;
+}
+
+header {
+    background-color: #831b1b;
+    color: rgb(255, 255, 255);
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5em;
+}
+
+.clothing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.clothing-item {
+    background-color: #b9c7c1;
+    border-radius: 10px;
+    overflow: hidden;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(255, 211, 211, 0.2);
+    transition: transform 0.3s;
+}
+
+.clothing-item:hover {
+    transform: scale(1.05);
+}
+
+.clothing-item img {
+    width: 100%;
+}
+
+.clothing-details {
+    padding: 15px;
+}
+
+.price {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.login-section, .bank-details-section {
+    text-align: center;
+    padding: 30px;
+    max-width: 400px;
+    margin: 30px auto;
+    background-color: #eef3af31;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(150, 35, 35, 0.2);
+}
+
+.login-section h2, .bank-details-section h2 {
+    color: #FF6B6B;
+}
+
+input, button {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #f10808;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+    </style>
+</head>
+<body>
+
+<!-- Header Section -->
+<header>
+    <h1>Welcome to kenny vee Children Wears</h1>
+    <p>Your one-stop shop for fashionable and affordable children’s clothing</p>
+</header>
+
+<!-- Clothing Grid Section -->
+<section class="clothing-grid">
+    <div class="clothing-item">
+        <img src="path-to-image-1.jpg" alt="Children Wear 1">
+        <div class="clothing-details">
+            <h3>Cute Summer Dress</h3>
+            <p>Perfect for any summer outing</p>
+            <p class="price">₦3,500</p>
+        </div>
+    </div>
+    <!-- Add more clothing items here -->
+</section>
+
+<!-- Login Section -->
+<section class="login-section">
+    <h2>Login to Your Account</h2>
+    <form id="loginForm">
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <input type="password" id="password" placeholder="Enter your password" required>
+        <button type="submit">Login</button>
+    </form>
+</section>
+
+<!-- Bank Details Section -->
+<section class="bank-details-section">
+    <h2>Enter Your Bank Details</h2>
+    <form id="bankDetailsForm">
+        <input type="text" id="name" placeholder="Full Name" required>
+        <input type="number" id="age" placeholder="Age" required>
+        <input type="text" id="bankName" placeholder="Bank Name" required>
+        <input type="text" id="accountNumber" placeholder="Account Number" required>
+        <button type="submit">Submit Bank Details</button>
+    </form>
+</section>
+
+<script src="script.js"></script>
+<script>
+    const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const app = express();
+const port = 3000;
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/euniceChildrenWears', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
+// Define User Schema
+const userSchema = new mongoose.Schema({
+    email: String,
+    password: String,
+    name: String,
+    age: Number,
+    bankName: String,
+    accountNumber: String,
+});
+
+const User = mongoose.model('User', userSchema);
+
+// User Login
+app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email, password });
+    if (user) {
+        res.send('Login successful!');
+    } else {
+        res.send('Invalid email or password.');
+    }
+});
+
+// Save Bank Details
+app.post('/bank-details', async (req, res) => {
+    const { email, name, age, bankName, accountNumber } = req.body;
+    const user = await User.findOneAndUpdate({ email }, { name, age, bankName, accountNumber }, { new: true, upsert: true });
+    res.send('Bank details saved successfully');
+});
+
+app.listen(port, () => {
+    console.log(Server running on http://localhost:${port});
+});
+</script>
+<script>
+    // Handle Login Form Submission
+document.getElementById('loginForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    const response = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+    });
+
+    const result = await response.text();
+    alert(result);
+});
+
+// Handle Bank Details Form Submission
+document.getElementById('bankDetailsForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
+    const email = document.getElementById('email').value; // assuming user is logged in with email
+    const name = document.getElementById('name').value;
+    const age = document.getElementById('age').value;
+    const bankName = document.getElementById('bankName').value;
+    const accountNumber = document.getElementById('accountNumber').value;
+
+    const response = await fetch('/bank-details', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, name, age, bankName, accountNumber }),
+    });
+
+    const result = await response.text();
+    alert(result);
+});
+    </script>
+</body>
+<button>
+    
+</button>
+</html>
